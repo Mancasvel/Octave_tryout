@@ -1,0 +1,103 @@
+% Ejercicio sobre señal de audio 1 -> Ejercicio Simple
+
+F = 440;  %Frecuencia señal
+A = 0.12; % Amplitud
+T = 2.5;  % Duration
+Fs = 11000; % Sampling frequency
+
+f = F/Fs; % normalized frequency
+N = Fs* T; %Number of samples
+n = 0: N-1; % Domain
+
+% Generacion de la señal
+
+t1_audio = A * cos(2*pi*f*n); %señal = Amplitud * coseno(2pif * n)
+
+
+%Crear señal senoidal (usando coseno) de N=19 f = 0.45 y fase inicial 2.27
+
+f = 0.45; % normalized frequency
+N = 19;
+A = 1;
+inicial = 2.27;
+
+n = 0: N-1;
+
+t1_cos = A* cos(2*pi*f*n + inicial);
+
+
+
+%Crea una señal senoidal de audio F= 250 d = 4 Fs = 2800
+
+A = 1; %amplitud es 1 por defecto
+F = 250;
+Fs = 2800;
+T = 4;
+
+f = F/Fs;
+N = Fs * T;
+n = 0: N-1;
+
+t2_audio = A * cos(2*pi*f*n);
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ejercicio Delta
+
+%% para funciones function salida = nombreFuncion(entrada)
+function y = t1_delta(n)
+  %% definimos en la funcion delta que es 1 para n==0
+  y = (n == 0);
+ endfunction;
+
+ function y = t1_y(n)
+   y = t1_delta(n-3);
+ endfunction;
+
+
+function ejercicioDelta()
+   n = [0, 3, 2];
+
+   res_delta = t1_delta(n);
+   res_y = t1_y(n);
+
+   %% para convertirlo a double
+   double_res_delta = double(res_delta);
+   double_res_y = double(res_y);
+
+   disp(double_res_delta);
+   disp(double_res_y);
+
+ endfunction
+
+
+ %%%% Funcion delta con L = 9 (longitud del pulso)
+
+ %% nota: si no se ejecuta aqui, luego no se puede ejecutar en terminal
+
+ function y = t1_pulso(n)
+   L = 9;
+   y = (n>=0) & (n<L);
+ endfunction
+
+ function y = t1_y1(n)
+   y = t1_pulso(n-3);
+ endfunction
+
+ function res_ej_delta1()
+  n = [-3,0,1];
+
+  res_pulso = t1_pulso(n);
+  res_y = t1_y1(n);
+
+  double_pulso = double(res_pulso);
+  double_y = double(res_y);
+
+  disp(double_pulso);
+  disp(double_y);
+
+endfunction
+
+

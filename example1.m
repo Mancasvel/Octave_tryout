@@ -42,6 +42,20 @@ t2_audio = A * cos(2*pi*f*n);
 
 
 
+%% Señal senoidal F= 500 T= 4 Fs= 5400
+
+F= 500;
+Fs= 5400;
+T= 4;
+A = 1; % 1 por defecto
+
+f = F/Fs;
+N = T*Fs;
+n = 0 : N-1;
+
+t2_audio_2 = A * cos(2*pi*f*n);
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Ejercicio Delta
@@ -100,4 +114,33 @@ function ejercicioDelta()
 
 endfunction
 
+
+%%%%%%%%%%%%%%%%%%%%%Numeros imaginarios
+%% Para representar numero imaginario sea i o j se representa con 1i por que i es una variable normal
+
+%% Para octava superior es F*2 y octava inferior F/2
+
+
+F = 440;
+Fs = 8000;
+T = 2s;
+A = 1;
+
+f = F/Fs;
+N = Fs* T;
+n = 0: N-1;
+
+t2_audio_3 = A * cos(2* pi * f * n );
+
+F_up = F*2;
+F_down = F/2;
+
+t2_audio_desplazado_superior = A * cos(2*pi * f_up *n);
+t2_inferior = A* cos(2* pi * f_down * n);
+
+
+[x, F] = audioread("./four.wav");
+
+audiowrite("fourUp.wav", x, F*2);
+audiowrite("fourDown.wav", x, F/2);
 

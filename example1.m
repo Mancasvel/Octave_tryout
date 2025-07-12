@@ -155,4 +155,39 @@ N = 168;
 t3_resolucion = Fs/N;
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Convoluciones%%%%%%%%%%%%%%%%%%%%%%%%
+
+% enunciado respuesta impulsiva:
+% respuesta impulsiva h[n] = [-1,0,-3, -1], salida cuando x[n] = [-1,1, -3, 2]
+% hacer convolucion de las dos listas
+
+h = [-1, 0, -3, -1];
+x = [-1, 1, -3, 2];
+
+%% primero input y luego la respuesta
+convolucion = conv(x, h);
+
+%% piden calcular los primeros 13 valores, entonces metemos 0s
+%% primero los valores de la convolucion y luego los ceros que faltan para llegar a 13
+t2_xout = [convolucion, zeros(1, 13 -length(convolucion))];
+
+
+
+%%%%Ejercicio respuesta impulsiva mas complicado:
+%% a partir de ecuacion donde se pasan y a la izquierda del igual y las x a la derecha
+
+N = 84;                            % Número de muestras que deseas
+b = [3, 0, -1, 0, 0, 3];           % Coeficientes del numerador
+a = [1, -1];                       % Coeficientes del denominador
+
+x = [1, zeros(1, N-1)];           % delta[n]
+h = filter(b, a, x);             % Respuesta impulsiva
+H = fft(h);                      % Respuesta en frecuencia (compleja)
+
+t4_H = abs(H);                   % Magnitud de la respuesta en frecuencia
+
+
+
+
+
 

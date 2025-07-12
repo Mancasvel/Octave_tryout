@@ -283,6 +283,40 @@ q1 = floor((s-a) * niveles /(b-a)) * (b-a) / niveles + a;
 
 %%%%FILTROS
 
+%% filtro paso baja L = 101, F = 400 y Fs = 2000 y queremos h y  modulo espectral H.
+
+L = 101;
+F = 400;
+Fs = 2000;
+
+n = 0: L-1;
+Nyq = Fs/2;
+
+fc = F/ Nyq;
+
+%% Calcular el centro
+
+m = L-1/2;
+% El filtro ideal es 2*f_c * sinc(2*f_c*(n - m)), desplazando para centrar en m
+
+h = 2 * fc * sinc(2*fc* (n-m));
+
+
+
+
+%% si fuera paso alta se invierte
+
+h1 = -h;
+h1(m + 1)= 1- h(m+1);
+
+
+%% Calculamos el valor absoluto con la fft y con 512 puntos de resolucion
+H = abs(fft(h,512));
+
+plot(H);
+
+
+
 
 
 %%%%%%%%%%%%%%IMAGENES%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -337,3 +371,10 @@ cantidad = histograma(16); %% ponemos el valor que queremos saber de input
 plot(histograma);
 
 
+
+
+%% Imagen monocroma con iluminacion media
+
+
+t4_gris_3 = mean(imagen_color, 3)/255;
+imshow(t4_gris_3);

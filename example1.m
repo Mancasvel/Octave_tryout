@@ -176,18 +176,83 @@ t2_xout = [convolucion, zeros(1, 13 -length(convolucion))];
 %%%%Ejercicio respuesta impulsiva mas complicado:
 %% a partir de ecuacion donde se pasan y a la izquierda del igual y las x a la derecha
 
-N = 84;                            % Número de muestras que deseas
-b = [3, 0, -1, 0, 0, 3];           % Coeficientes del numerador
-a = [1, -1];                       % Coeficientes del denominador
+N = 64;
+x = [1, zeros(1, N-1)];         % Paso 1: impulso
 
-x = [1, zeros(1, N-1)];           % delta[n]
-h = filter(b, a, x);             % Respuesta impulsiva
-H = fft(h);                      % Respuesta en frecuencia (compleja)
+b = [3, 0, -1, 0, 0, 3];        % coeficientes entrada x[n]
+a = [1, -1];                    % coeficientes salida y[n]
 
-t4_H = abs(H);                   % Magnitud de la respuesta en frecuencia
+h = filter(b, a, x);            % Paso 2: respuesta al impulso
 
-
-
+H = fft(h);                     % Paso 3: respuesta en frecuencia (compleja)
+mag_H = abs(H);                 % Paso 4: magnitud = lo que ves y puedes graficar
 
 
+%%%%%Convolucion circular
 
+%% formula : ifft(fft(x) .* fft(y)) = x[n] ⊛ y[n]
+%% reminder: a .* b   →   [1*4, 2*5, 3*6]  →  [4, 10, 18]
+
+%%convolucion circular para x[n] y y[n]
+
+
+x = [3, 3, -2, 3, -4];
+y = [-1, 3, -4, 0, -1];
+
+%% 1 -> Hacemmos fft
+fourx = fft(x);
+foury = fft(y);
+
+%%  2 -> Multiplicamos las dos con punto
+conv = fourx.*foury;
+
+%% 3 -> Hacemos la inversa de fft sobre la conv
+t3_conv = ifft(conv);
+
+plot(t3_conv);
+
+
+%%%% ejercicio extra conv circular en una funcion
+
+function convCircular()
+x =[-3, -1, 4, 4, 2];
+y  = [-1, 5, -4, 1, -1];
+
+%%fft de ambas
+
+fftx = fft(x);
+ffty = fft(y);
+
+%% multiplicacion punto
+
+conv = fftx .* ffty;
+
+%% inversa de fft
+
+t3_conv_2 = ifft(conv);
+
+plot(t3_conv_2);
+
+endfunction
+
+%%%%%%%%%Calcular modulo fft
+
+%% dificultad: funcion tiene el escalon unitario
+
+
+N = 23;
+n = 0: N-1;
+
+%% hacemos la funcion u[n] donde si n>= 0 es 1
+u = ones(0: N);
+
+%%% Definimos la funcion a partir del enunciado
+
+x = u + 2 * cos(2* pi * 0.25 * n) + 3 * cos(2*pi* 0.40 * n);
+
+%%Queremos modulo de la fft, hacemos fft y luego abs
+
+fftx = fft(x);
+t3_x = abs(fftx);
+
+plot(t3_x);

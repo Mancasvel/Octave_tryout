@@ -152,9 +152,12 @@ Fs = 1900;
 N = 168;
 
 %Resolucion espectral es igual Todos los samples / numero ciclos
-t3_resolucion = Fs/N;
+t3_resolucion = Fs/N; %% en hercios
+fres = 1/N;           %% en ciclos/ muestra
 
 
+
+%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Convoluciones%%%%%%%%%%%%%%%%%%%%%%%%
 
 % enunciado respuesta impulsiva:
@@ -256,3 +259,81 @@ fftx = fft(x);
 t3_x = abs(fftx);
 
 plot(t3_x);
+
+%%%%CUANTIZACION SEÑAL
+
+%% cuantizar secuencia s = 0:0.07:1 en rango [0,1] con 7 niveles y asignar en q
+
+s = 0:0.07:1;
+levels = 7;
+
+q = floor(s * niveles)/niveles;
+
+%% si el rango fuera de [2, 5] y 8 niveles
+
+s = 0:0.07:1;
+levels = 8;
+
+a = 2;
+b = 5;
+
+q1 = floor((s-a) * niveles /(b-a)) * (b-a) / niveles + a;
+
+
+
+%%%%FILTROS
+
+
+
+%%%%%%%%%%%%%%IMAGENES%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% Convertir imagen a monocroma
+
+%% a verde
+
+imagen_color = imread("nostalgia2.jpg");
+
+%% (fila, columna, canal)
+t5_gris = imagen_color(:,:,2); %% rgb so 2 y green
+
+imshow(t5_gris);
+
+
+
+%%% ECUALIZAR IMAGENES
+
+%% ecualiza imagen nostalgia2
+
+imagen = imread("nostalgia2.jpg");
+
+
+%% calculamos histograma
+
+histograma = hist(imagen(:), 0:255);
+
+%%%% 2 -> Calculamos CDF funcion distribucion acumulativa
+
+cdf  = cumsum(histograma); %% hacemos el cumsum sobre el histograma
+cdf = cdf / max(cdf);     %% normalizada para valores entre 0 y 1
+
+
+%%%% 3 -> aplicar ecualizcion (asignar nuevo nivel de brillo)
+
+t6_ecualizada = uint8(cdf(double(imagen) + 1) * 255);
+
+imshow(t6_ecualizada);
+
+
+%%% Calcular histograma imagen y dar la cantidad de pixeles con nivel de gris = 15
+
+
+imagen_grey = rgb2gray(imagen); %% imagen de rgb a gris o imagen(:, :, 2)
+
+histograma = hist(imagen_grey(:), 0:255); %% calcular histograma (:) y de 0:255
+
+cantidad = histograma(16); %% ponemos el valor que queremos saber de input
+
+plot(histograma);
+
+

@@ -139,8 +139,20 @@ t2_audio_desplazado_superior = A * cos(2*pi * f_up *n);
 t2_inferior = A* cos(2* pi * f_down * n);
 
 
-[x, F] = audioread("./four.wav");
+[x, Fs] = audioread("four.wav");
 
-audiowrite("fourUp.wav", x, F*2);
-audiowrite("fourDown.wav", x, F/2);
+audiowrite("fourUp.wav", x, Fs*2);
+audiowrite("fourDown.wav", x, Fs/2);
+
+
+
+%% Resolucion espectral Fs= 1900 cuando se cogen N = 168
+
+Fs = 1900;
+N = 168;
+
+%Resolucion espectral es igual Todos los samples / numero ciclos
+t3_resolucion = Fs/N;
+
+
 

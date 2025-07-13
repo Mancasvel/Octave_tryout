@@ -262,6 +262,18 @@ plot(t3_x);
 
 %%%%CUANTIZACION SEÑAL
 
+audio = audioread("audio.wav");
+L = 10;
+
+maxi = max(audio);
+mini = min(audio);
+step = (maxi - mini) /(L -1);
+
+t1_cuant = round((audio -mini) /step) * step + mini;
+
+
+
+
 %% cuantizar secuencia s = 0:0.07:1 en rango [0,1] con 7 niveles y asignar en q
 
 s = 0:0.07:1;

@@ -97,3 +97,47 @@ n0 = 2;        %% desplazamiento x[n-2]
 t2_y = exp(-1i*2*pi * k * n0/N) .*fft(x); %% funcion de e multiplicacion punto fft(x)
 
 
+
+
+
+
+
+
+
+
+%% ejercicio extra señal F = 500 Fx = 5400 T = 4
+
+T = 4;
+F = 500
+Fs = 5400;
+N = T* Fs;
+A = 1;
+f = F/Fs;
+n = 0: N-1;
+
+t2_audio = A * cos(2* pi * f * n);
+
+
+function y = t1_pulso(n)
+  y = (n >= 0) & (n < 9);
+endfunction
+
+function y = t1_y(n)
+  y = t1_pulso(n-3);
+endfunction
+
+function examen()
+  x = [-3, 0, 1];
+
+  output1 = t1_pulso(x);
+  output2 = t1_y(x);
+
+  aux1 = double(output1);
+  aux2 = double(output2);
+
+  disp(aux1);
+  disp(aux2);
+
+  endfunction
+
+

@@ -123,7 +123,7 @@ endfunction
 
 F = 440;
 Fs = 8000;
-T = 2s;
+T = 2;
 A = 1;
 
 f = F/Fs;
@@ -132,8 +132,8 @@ n = 0: N-1;
 
 t2_audio_3 = A * cos(2* pi * f * n );
 
-F_up = F*2;
-F_down = F/2;
+f_up = F*2;
+f_down = F/2;
 
 t2_audio_desplazado_superior = A * cos(2*pi * f_up *n);
 t2_inferior = A* cos(2* pi * f_down * n);
@@ -168,11 +168,11 @@ h = [-1, 0, -3, -1];
 x = [-1, 1, -3, 2];
 
 %% primero input y luego la respuesta
-convolucion = conv(x, h);
+y = conv(x, h);
 
 %% piden calcular los primeros 13 valores, entonces metemos 0s
 %% primero los valores de la convolucion y luego los ceros que faltan para llegar a 13
-t2_xout = [convolucion, zeros(1, 13 -length(convolucion))];
+t2_xout = [y, zeros(1, 13 -length(y))];
 
 
 
@@ -247,7 +247,7 @@ N = 23;
 n = 0: N-1;
 
 %% hacemos la funcion u[n] donde si n>= 0 es 1
-u = ones(0: N);
+u = ones(0, N-1);
 
 %%% Definimos la funcion a partir del enunciado
 
@@ -267,7 +267,7 @@ plot(t3_x);
 s = 0:0.07:1;
 levels = 7;
 
-q = floor(s * niveles)/niveles;
+q = round(s * niveles)/niveles;
 
 %% si el rango fuera de [2, 5] y 8 niveles
 
@@ -276,15 +276,14 @@ levels = 8;
 
 a = 2;
 b = 5;
-
-q1 = floor((s-a) * niveles /(b-a)) * (b-a) / niveles + a;
+step = (b -a);
+q1 = round((s-a) * niveles /step) * step / niveles + a;
 
 
 
 %%%%FILTROS
 
 %% filtro paso baja L = 101, F = 400 y Fs = 2000 y queremos h y  modulo espectral H.
-
 L = 101;
 F = 400;
 Fs = 2000;
@@ -316,7 +315,54 @@ H = abs(fft(h,512));
 plot(H);
 
 
+%%% Diezmado e Interpolacion
 
+%% diezmado de 0 a 100 con filtro aliasing D = 3
+
+N = 100;
+n = 0:N-1;
+D = 3;
+
+
+%% 1 calculamos x con cos (por usar alguna), punto medio M, y fc
+x = cos(n);
+M = floor(N/2);
+fc = 1 / (2*D); %% frecuencia corte para evitar aliasing
+
+filtro = 2*fc* sinc(2*fc* (n-M)); %% filtro antialiasing
+x_filtrada = conv(x,filtro);      %% aplica filtro a x
+t4_xout = x_filtrada(1:D:end);    %% devuelve el array saltando D elementos
+
+
+%%% Interpolacion
+I = 2;
+N = 10;
+n = 0:N-1;
+
+x = cos(n);
+M = floor(N/2);
+fc = 1/(2*I);
+
+filtro = 2*fc * sinc(2 * fc * (n -M));
+x_interpolada = zeros(1, length(x)*I); %% crear array vacio con (0)
+x_interpolada(1:I:end) = x;            %% colocamos valor de x cada I posiciones
+t4_xout = conv(x_interpolada, filtro);      %% aplica filtro a x_interpolada
+
+
+%% extra interpolacion
+
+N = 20;
+I = 4;
+n = 0: N-1;
+
+x = sin(2*pi*n/10);
+M = floor(N/2);
+fc = 1/(2*I);
+
+filtro = 2 * fc * sinc(2*fc * (n - M ));
+zeros_signal = zeros(1, length(x)* I);
+zeros_signal(1:I:end) = x;
+t77_out = conv(zeros_signal,filtro);
 
 
 %%%%%%%%%%%%%%IMAGENES%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -378,3 +424,5 @@ plot(histograma);
 
 t4_gris_3 = mean(imagen_color, 3)/255;
 imshow(t4_gris_3);
+
+

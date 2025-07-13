@@ -322,7 +322,7 @@ h1(m + 1)= 1- h(m+1);
 
 
 %% Calculamos el valor absoluto con la fft y con 512 puntos de resolucion
-H = abs(fft(h,512));
+H = abs(fft(h));
 
 plot(H);
 
@@ -437,4 +437,26 @@ plot(histograma);
 t4_gris_3 = mean(imagen_color, 3)/255;
 imshow(t4_gris_3);
 
+%% tarea 4 pasar a imagen monoceopa metodo del brillo
 
+r = imagen(:,:,1);
+g = imagen(:,:,2);
+b = imagen(:,:,3);
+
+imagen_gris = r * 0.3 + g * 0.6 + b *0.1;
+imagen_gris = uint8(imagen_gris);
+
+imshow(imagen_gris);
+
+
+%% cuantizar imagen HLS
+
+hls = rgb2hls(imagen);
+
+%%dividir en los tres h l y s
+h = floor(hls(:,:,1)/ (360/3)); %% para h 360
+l = floor(hls(:,:,2)/ 5);
+s = floor(hls(:,:,3)/6);
+
+%% aplicar solo para esos pixeles
+t5_mask = (h == 0) & (l==3) & (s==1);

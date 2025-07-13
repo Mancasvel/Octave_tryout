@@ -4,7 +4,7 @@
 [![MATLAB](https://img.shields.io/badge/MATLAB-Compatible-orange.svg)](https://www.mathworks.com/products/matlab.html)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Este repositorio contiene una colección estructurada y comentada de **ejercicios prácticos en GNU Octave** relacionados con el **Procesamiento Digital de Señales (DSP)**, desarrollados para el estudio de la asignatura *Procesamiento de Señales Multimedia* de 3º del Grado en Ingeniería Informática - Ingeniería del Software (Universidad de Sevilla).
+Este repositorio contiene una colección estructurada y comentada de **ejercicios prácticos en GNU Octave** relacionados con el **Procesamiento Digital de Señales**, desarrollados para el estudio de la asignatura *Procesamiento de Señales Multimedia* de 3º del Grado en Ingeniería Informática - Ingeniería del Software (Universidad de Sevilla).
 
 ---
 

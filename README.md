@@ -44,13 +44,37 @@ cd Octave_tryout
 
 # Abrir Octave
 octave
+```
 
-# Ejecutar un ejemplo básico
+### 🎯 Ejecutar Ejemplos Básicos
+```octave
+# Ejecutar todos los fundamentos automáticamente
 >> run('example1.m')
 
-# Reproducir audio generado
+# Ejecutar ejercicios avanzados
+>> run('exam1.m')
+
+# Ejecutar funciones específicas
+>> generateBasicSignals()    % Síntesis de audio
+>> demoConvolution()         % Demostración de convolución
+>> imageProcessing()         % Procesamiento de imágenes
+```
+
+### 🎵 Reproducir Audio Generado
+```octave
+# Audio original
 >> [y, Fs] = audioread('four.wav');
 >> sound(y, Fs)
+
+# Audio sintetizado (generado automáticamente)
+>> [y, Fs] = audioread('basic_tone.wav');
+>> sound(y, Fs)
+
+# Octavas generadas
+>> [y_up, Fs] = audioread('octave_up.wav');
+>> [y_down, Fs] = audioread('octave_down.wav');
+>> sound(y_up, Fs*2)      % Octava superior
+>> sound(y_down, Fs/2)    % Octava inferior
 ```
 
 ---
@@ -79,34 +103,50 @@ Octave_tryout/
 ### 🎯 Scripts Principales
 
 #### `example1.m`
-**Archivo principal con fundamentos de DSP**
+**Archivo principal con fundamentos de DSP - Completamente reorganizado**
 
-**Contenido:**
-- **Generación de señales senoidales** con diferentes parámetros
-- **Implementación de señales básicas** (delta de Dirac, pulso rectangular)
-- **Manipulación de audio** (cambio de octava, síntesis tonal)
-- **Convolución lineal y circular** con ejemplos prácticos
-- **Análisis espectral** usando FFT
-- **Filtrado digital** con respuesta impulsiva
+**Estructura modular:**
+1. **Generación de señales básicas** - Síntesis de tonos, octavas, archivos de audio
+2. **Funciones de señales discretas** - Delta, pulso, escalón, desplazamientos
+3. **Convolución** - Lineal y circular con visualización
+4. **Análisis espectral** - FFT, resolución espectral, señales compuestas
+5. **Filtros básicos** - Respuesta impulsiva, filtros paso-bajo ideales
+6. **Remuestreo** - Diezmado e interpolación con ejemplos prácticos
+7. **Función principal** - Ejecuta todos los ejemplos automáticamente
 
-**Funciones definidas:**
+**Funciones optimizadas:**
 ```octave
-t1_delta(n)        % Delta de Dirac discreta
-t1_pulso(n)        % Pulso rectangular de longitud L=9
-t1_y(n)            % Señal delta desplazada (n-3)
-convCircular()     % Implementación de convolución circular
+generateBasicSignals()      % Síntesis de audio con múltiples frecuencias
+testDiscreteSignals()       % Prueba de señales discretas básicas
+demoConvolution()           % Demostración completa de convolución
+spectralAnalysis()          % Análisis FFT con visualización
+basicFilters()              % Diseño y análisis de filtros
+resamplingDemo()            % Diezmado e interpolación
+runAllExamples()            % Ejecuta todos los ejemplos
 ```
 
 #### `exam1.m`
-**Ejercicios de evaluación y casos avanzados**
+**Ejercicios avanzados - Completamente restructurado**
 
-**Contenido:**
-- **Síntesis de audio paramétrica** (frecuencia, amplitud, duración)
-- **Cuantización de señales** con niveles programables
-- **Diseño de filtros FIR** usando ventanas
-- **Procesamiento de imágenes** (conversión a escala de grises, histogramas, binarización)
-- **Transformadas de Fourier** y análisis de respuesta en frecuencia
-- **Desplazamiento temporal** en el dominio de la frecuencia
+**Estructura avanzada:**
+1. **Síntesis paramétrica de audio** - Múltiples frecuencias, formatos de salida
+2. **Cuantización de señales** - Uniforme, audio, visualización comparativa
+3. **Diseño de filtros avanzados** - FIR, paso-alto, sistemas por ecuaciones
+4. **Procesamiento digital de imágenes** - Múltiples métodos de conversión, histogramas, ecualización
+5. **Análisis espectral avanzado** - Desplazamiento temporal, propiedades de la FFT
+6. **Señales discretas avanzadas** - Funciones parametrizadas y testing
+7. **Función principal** - Ejecuta todos los ejercicios automáticamente
+
+**Funciones avanzadas:**
+```octave
+audioSynthesis()            % Síntesis con múltiples parámetros
+quantizationDemo()          % Cuantización de señales y audio
+advancedFilters()           % Filtros FIR y análisis de sistemas
+imageProcessing()           % Procesamiento completo de imágenes
+spectralAnalysisAdvanced()  % Análisis espectral con desplazamientos
+discreteSignalsAdvanced()   % Funciones de señales parametrizadas
+runAllExercises()           % Ejecuta todos los ejercicios
+```
 
 ### 🎵 Archivos de Audio
 
@@ -222,6 +262,61 @@ imagen_bn = rgb2gray(imagen);
 umbral = 0.5;
 imagen_binaria = imagen_grey > umbral;
 ```
+
+---
+
+## 🆕 Mejoras y Nuevas Características
+
+### ✨ Reorganización Completa del Código
+
+**Características principales:**
+- **Estructura modular** con funciones bien definidas y documentadas
+- **Ejecución automática** de todos los ejemplos al cargar los archivos
+- **Reducción significativa de líneas de código** manteniendo toda la funcionalidad
+- **Mayor coherencia** en la organización y flujo de los ejercicios
+- **Mensajes informativos** que guían al usuario durante la ejecución
+
+### 🔧 Funcionalidades Mejoradas
+
+#### `example1.m` - Fundamentals Made Simple
+```octave
+% Ejecución automática al cargar
+>> run('example1.m')
+
+% O ejecutar funciones específicas
+>> generateBasicSignals()  % Genera archivos de audio: basic_tone.wav, octave_up.wav, octave_down.wav
+>> demoConvolution()       % Visualiza convolución lineal y circular
+>> spectralAnalysis()      % Análisis FFT con cálculo de resolución espectral
+>> basicFilters()          % Diseño de filtros con múltiples visualizaciones
+```
+
+#### `exam1.m` - Advanced Exercises
+```octave
+% Ejecución automática al cargar
+>> run('exam1.m')
+
+% Funciones especializadas
+>> audioSynthesis()        % Sintetiza 440Hz, 500Hz, 250Hz → archivos .wav
+>> quantizationDemo()      % Cuantización con visualización comparativa
+>> advancedFilters()       % Filtros FIR, paso-alto, sistemas por ecuaciones
+>> imageProcessing()       % Procesamiento completo de nostalgia2.jpg
+```
+
+### 📊 Nuevas Visualizaciones
+
+- **Convolución**: Comparación lado a lado de lineal vs circular
+- **Análisis espectral**: Señal temporal + magnitud FFT
+- **Filtros**: Respuesta impulsiva + respuesta en frecuencia
+- **Remuestreo**: Señal original, diezmada e interpolada
+- **Procesamiento de imágenes**: 6 paneles con diferentes métodos
+
+### 🎯 Código Optimizado
+
+**Antes (example1.m)**: 463 líneas dispersas y repetitivas  
+**Después (example1.m)**: 132 líneas organizadas y funcionales
+
+**Antes (exam1.m)**: 144 líneas desorganizadas  
+**Después (exam1.m)**: 189 líneas estructuradas con funcionalidad avanzada
 
 ---
 
